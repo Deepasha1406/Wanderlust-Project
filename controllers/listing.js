@@ -34,7 +34,6 @@ module.exports.createListing = async (req,res,next)=>{
     newListing.image =  {url, filename};
     await newListing.save();
     req.flash("success","New listing created");
-    console.log("yoo");
     res.redirect("/listings");
 };
 

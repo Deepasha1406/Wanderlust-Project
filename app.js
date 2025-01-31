@@ -13,8 +13,8 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const Review = require("./models/review.js");
 const {listingSchema,reviewSchema} = require("./schema.js");
-const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const session = require('express-session');
 const flash = require("connect-flash")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -64,7 +64,7 @@ const sessionOptions = {
     cookie:{
       expires: Date.now() + 7*24*60*60*1000,
       maxAge: 7*24*60*60*1000,
-      httpOnly: true,
+      httpOnly: true,   
     },
 };
 

@@ -13,8 +13,8 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const Review = require("./models/review.js");
 const {listingSchema,reviewSchema} = require("./schema.js");
-const MongoStore = require('connect-mongo');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const flash = require("connect-flash")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -44,7 +44,7 @@ async function main() {
     await mongoose.connect(dbUrl);
 };
 
-const store = MongoStore.create({
+const store = new MongoStore({
     mongoUrl: dbUrl,
     crypto: {
         secret: process.env.SECRET,
@@ -61,9 +61,6 @@ const sessionOptions = {
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore.create({
-    mongoUrl: dbUrl
-  }),
     cookie:{
       expires: Date.now() + 7*24*60*60*1000,
       maxAge: 7*24*60*60*1000,

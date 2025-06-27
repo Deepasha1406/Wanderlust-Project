@@ -14,7 +14,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const Review = require("./models/review.js");
 const {listingSchema,reviewSchema} = require("./schema.js");
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');    
 const flash = require("connect-flash")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -44,7 +44,8 @@ async function main() {
     await mongoose.connect(dbUrl);
 };
 
-const store = new MongoStore({
+
+const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
         secret: process.env.SECRET,
@@ -52,7 +53,7 @@ const store = new MongoStore({
     touchAfter: 24 * 3600 // Time period in seconds
 });
 
-store.on("error",() =>{
+store.on("error", (err) => {
     console.log("ERROR in MONGO SESSION STORE", err);
 });
 
